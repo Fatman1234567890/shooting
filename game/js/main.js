@@ -1,14 +1,12 @@
+
+import {player,initPlayer,drawPlayer} from"./player.js";
+import {enemies,spawnEnemy} from"./enemies.js";
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-
-const player = {
-    x: canvas.width / 2 - 15,
-    y: canvas.height - 60,
-    width: 30,
-    height: 30,
-    color: "yellow"
-};
+initPlayer(canvas);
+spawnEnemy(canvas);
 
 
 const bullets=[];
@@ -18,8 +16,8 @@ function tryShoot(now){
     bullets.push({
         x:player.x,
         y:player.y,
-        width:5,
-        height:5,
+        width:10,
+        height:10,
         vy:BULLETS_SPEED,
     })
 }
@@ -60,12 +58,11 @@ function draw(){
 ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-     ctx.fillStyle = player.color;
-    ctx.fillRect(player.x, player.y, player.width, player.height);
+    drawPlayer(ctx);
 
      ctx.fillStyle = "white";
-     for(let i=0;i<bullets.length;i++){
-        const bullet=bullets[i];
+     for(let i=0;i<enemies.length;i++){
+        const bullet=enemies[i];
       ctx.fillRect(bullet.x,bullet.y,bullet.width,bullet.height);
 }
 }
