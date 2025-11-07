@@ -1,27 +1,36 @@
 
-
 import { player, initPlayer, drawPlayer } from "./player.js";
-import { spawnEnemy, enemies,updateEnemies,drawEnemies } from "./enemies.js";
+import { spawnEnemy, enemies, updateEnemies, drawEnemies } from "./enemies.js";
 import { handleCollisions } from "./collision.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-initPlayer(canvas);
 
+
+initPlayer(canvas);
 
 export const bullets = [];
 const BULLET_SPEED = -5;
 
 function tryShoot() {
     bullets.push({
-        x: player.x,
+        x: player.x+player.width/2 - 100,
         y: player.y,
-        width: 10,
+        width: 200,
         height: 10,
         vy: BULLET_SPEED,
     })
 }
+
+function updateScore(){
+    const scoreBoard = document.getElementById("scoreBosrd");
+    scoreBoard.innerText = `Score:${player.score}`;
+    const lifeBoard = document.getElementById("lifeBoard");
+    lifeBoard.innerText = `Life:${player.life}`;
+}
+
+
 
 
 window.addEventListener("keydown", (e) => {
@@ -46,24 +55,26 @@ function update() {
             bullets.splice(i, 1);
         }
     }
-    spawnEnemy(canvas);
+    spawnEnemy(canvas);    
     updateEnemies(canvas);
     handleCollisions();
+    updateScore();
+
 }
 
 function draw() {
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     drawPlayer(ctx);
 
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "blue";
     for (let i = 0; i < bullets.length; i++) {
         const bullet = bullets[i];
         ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
     }
 
-   drawEnemies(ctx);
+    drawEnemies(ctx);
 }
 
 function gameLoop() {
@@ -73,4 +84,3 @@ function gameLoop() {
 }
 
 gameLoop();
-

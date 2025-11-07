@@ -1,24 +1,23 @@
-export const enemies=[];
-const SIZE=26;
+export const enemies = [];
+const SIZE = 50;
+const enemyImage = new Image();
+enemyImage.src = "https://kanji.jitenon.jp/shotai2/776.gif";
 
-function pushEnemy(canvas){
-    const w=SIZE;
-    const h=SIZE;
-    const x=Math.random()*(canvas.width - w);
-    const y=0;
-    const vy=5
+function pushEnemies(canvas) {
+  const w = SIZE;
+  const h = SIZE;
+  const x = Math.random() * (canvas.width - w);
+  const y = 0;
+  const vy = 5;
 
-    enemies.push({x,y,width:w,height:h,vy});
+  enemies.push({ x, y, width: w, height: h, vy });
 }
 
-export function spawnEnemy(canvas){
-    if(enemies.length < 5){
-     pushEnemy(canvas);
-    }
+export function spawnEnemy(canvas) {
+ if (enemies.length < 30) {
+    pushEnemies(canvas);
+ }
 }
-
-
-
 
 export function updateEnemies(canvas) {
   for (let i = enemies.length - 1; i >= 0; i--) {
@@ -33,6 +32,6 @@ export function updateEnemies(canvas) {
 export function drawEnemies(ctx) {
   ctx.fillStyle = "crimson";
   for (const e of enemies) {
-    ctx.fillRect(e.x, e.y, e.width, e.height);
+    ctx.drawImage(enemyImage, e.x, e.y, e.width, e.height);
   }
 }
