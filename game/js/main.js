@@ -18,19 +18,34 @@ function tryShoot() {
     for (let i = 0; i < 5; i++) {
 
         
-        const angle = (Math.random() * 350 -10 ) * (Math.PI / 360);
+       
 
         // 速さ
-        const speed = 5;
+        const speed = -5;
 
         bullets.push({
             x: player.x + player.width / 2 - 5,
             y: player.y,
             width: 15,
             height: 15  ,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * -speed,  
-        });
+            vx: 0,
+            vy: speed,  
+        },{
+            x: player.x + player.width / 2 - 5,
+            y: player.y,
+            width: 15,
+            height: 15  ,
+            vx: 1,
+            vy: speed,  
+        },{
+            x: player.x + player.width / 2 - 5,
+            y: player.y,
+            width: 15,
+            height: 15  ,
+            vx: -1,
+            vy: speed,  
+        },
+    );
     }
 }
 
@@ -54,6 +69,16 @@ window.addEventListener("keydown", (e) => {
         if (player.x < canvas.width - player.width - 10) {
             player.x += 10;
         }
+    } else if (e.key === "ArrowUp") {
+        if (player.y > 10) {
+            player.y -= 10;
+        }
+
+        }else if (e.key === "ArrowDown") {
+        if (player.y < canvas.height - player.height - 10) {
+            player.y += 10;
+        }
+
     } else if (e.code === "Space") {
         tryShoot();
     }
@@ -90,7 +115,7 @@ function update() {
     for (let i = bullets.length - 1; i >= 0; i--) {
     const bullet = bullets[i];
     bullet.y += bullet.vy;
-    bullet.x += bullet.vx;  // ← これを追加！
+    bullet.x += bullet.vx;  
 
     if (bullet.y < -20) {
         bullets.splice(i, 1);
